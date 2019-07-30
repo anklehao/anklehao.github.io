@@ -4,16 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="记录一些有用的网站, AnkleHao">
-    <meta name="description" content="好文收藏
-网上搜集
+    <meta name="keywords" content="js技巧合集, AnkleHao">
+    <meta name="description" content="JS技巧
+总结网上一些大佬收集分享的实用js方法技巧
 
-
-抱歉，学会 Proxy 真的可以为所欲为
-TypeScript，初次见面，请多指教
-为什么你应该（从现在开始就）写博客
-
-在线工具">
+无loop生成指定长度的数组const list = [1, 1, 2, 3, 6, 45, 8, 5, 4, 6, 5]
+const uniqueList = [...new Set">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +17,7 @@ TypeScript，初次见面，请多指教
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>记录一些有用的网站 | AnkleHao</title>
+    <title>js技巧合集 | AnkleHao</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -36,7 +32,8 @@ TypeScript，初次见面，请多指教
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-cb.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -265,13 +262,13 @@ TypeScript，初次见面，请多指教
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        记录一些有用的网站
+                        js技巧合集
                     </div>
                 </div>
             </div>
@@ -380,9 +377,17 @@ TypeScript，初次见面，请多指教
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/tag1/" target="_blank">
+                                <span class="chip bg-color">tag1</span>
+                            </a>
+                        
+                            <a href="/tags/tag2/" target="_blank">
+                                <span class="chip bg-color">tag2</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -393,7 +398,7 @@ TypeScript，初次见面，请多指教
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-07-25
+                    2019-05-07
                 </div>
 
                 
@@ -409,15 +414,66 @@ TypeScript，初次见面，请多指教
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="好文收藏"><a href="#好文收藏" class="headerlink" title="好文收藏"></a>好文收藏</h3><blockquote>
-<p>网上搜集</p>
+                <h1 id="JS技巧"><a href="#JS技巧" class="headerlink" title="JS技巧"></a>JS技巧</h1><blockquote>
+<p>总结网上一些大佬收集分享的实用js方法技巧</p>
 </blockquote>
-<ul>
-<li><a href="https://zhuanlan.zhihu.com/p/35080324" target="_blank" rel="noopener">抱歉，学会 Proxy 真的可以为所欲为</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/57958328" target="_blank" rel="noopener">TypeScript，初次见面，请多指教</a></li>
-<li><a href="http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/" target="_blank" rel="noopener">为什么你应该（从现在开始就）写博客</a></li>
+<h3 id="无loop生成指定长度的数组"><a href="#无loop生成指定长度的数组" class="headerlink" title="无loop生成指定长度的数组"></a>无loop生成指定长度的数组</h3><pre><code>const list = [1, 1, 2, 3, 6, 45, 8, 5, 4, 6, 5]
+const uniqueList = [...new Set(list)] // [1, 2, 3, 6, 45, 8, 5, 4]
+</code></pre><h3 id="RGB色值生成16进制色值"><a href="#RGB色值生成16进制色值" class="headerlink" title="RGB色值生成16进制色值"></a>RGB色值生成16进制色值</h3><pre><code>const rgb2Hex = rgb =&gt; {
+    let rgbList = rgb.toString().match(/\d+/g)
+    let hex = &#39;#&#39;
+    for (let i = 0, len = rgbList.length; i &lt; len; ++i) {
+        hex += (&#39;0&#39; + Number(rgbList[i]).toString(16)).slice(-2)
+    }
+    return hex
+};
+rgb2Hex(&#39;100, 50, 0&#39;) // &#39;#643200&#39;
+</code></pre><h3 id="一行代码去重数组"><a href="#一行代码去重数组" class="headerlink" title="一行代码去重数组"></a>一行代码去重数组</h3><pre><code>const list = [1, 1, 2, 3, 6, 45, 8, 5, 4, 6, 5]
+const uniqueList = [...new Set(list)] // [1, 2, 3, 6, 45, 8, 5, 4]
+</code></pre><h3 id="判断是否为质数"><a href="#判断是否为质数" class="headerlink" title="判断是否为质数"></a>判断是否为质数</h3><pre><code>const mathIsPrime = n =&gt; {
+  if (n === 2 || n === 3) {
+    return true
+  }
+  if (isNaN(n) || n &lt;= 1 || n % 1 != 0 || n % 2 == 0 || n % 3 == 0) {
+    return false;
+  }
+  for (let x = 6; x &lt;= Math.sqrt(n) + 1; x += 6) {
+    if (n % (x - 1) == 0 || n % (x + 1) == 0) {
+      return false
+    }
+  }
+  return true
+}
+mathIsPrime(0) // true
+</code></pre><h3 id="时间格式化"><a href="#时间格式化" class="headerlink" title="时间格式化"></a>时间格式化</h3><pre><code>const dateFormatter = (formatter, date) =&gt; {
+    date = (date ? new Date(date) : new Date)
+    const Y = date.getFullYear() + &#39;&#39;,
+          M = date.getMonth() + 1,
+          D = date.getDate(),
+          H = date.getHours(),
+          m = date.getMinutes(),
+          s = date.getSeconds()
+    return formatter.replace(/YYYY|yyyy/g, Y)
+                    .replace(/YY|yy/g, Y.substr(2, 2))
+                    .replace(/MM/g, (M &lt; 10 ? &#39;0&#39; : &#39;&#39;) + M)
+                    .replace(/DD/g, (D &lt; 10 ? &#39;0&#39; : &#39;&#39;) + D)
+                    .replace(/HH|hh/g, (H &lt; 10 ? &#39;0&#39; : &#39;&#39;) + H)
+                    .replace(/mm/g, (m &lt; 10 ? &#39;0&#39; : &#39;&#39;) + m)
+                    .replace(/ss/g, (s &lt; 10 ? &#39;0&#39; : &#39;&#39;) + s)
+}
+
+dateFormatter(&#39;YYYY-MM-DD HH:mm&#39;, &#39;1995/02/15 13:55&#39;) // 1995-02-15 13:55
+</code></pre><h3 id="生成随机ID"><a href="#生成随机ID" class="headerlink" title="生成随机ID"></a>生成随机ID</h3><pre><code>const RandomId = len =&gt; Math.random().toString(36).substr(3, len);
+const id = RandomId(10);
+// id =&gt; &quot;jg7zpgiqva&quot;
+</code></pre><h3 id="生成星级评分"><a href="#生成星级评分" class="headerlink" title="生成星级评分"></a>生成星级评分</h3><pre><code>const StartScore = rate =&gt; &quot;★★★★★☆☆☆☆☆&quot;.slice(5 - rate, 10 - rate);
+const start = StartScore(3);
+// start =&gt; &quot;★★★&quot;
+</code></pre><h3 id="网站链接"><a href="#网站链接" class="headerlink" title="网站链接"></a><strong>网站链接</strong></h3><ul>
+<li><a href="https://juejin.im/post/5cc7afdde51d456e671c7e48" target="_blank" rel="noopener">技巧网站</a></li>
+<li><a href="https://juejin.im/post/5d3e96696fb9a07ea420c71c" target="_blank" rel="noopener">提升开发幸福感的10条JS技巧</a></li>
 </ul>
-<h3 id="在线工具"><a href="#在线工具" class="headerlink" title="在线工具"></a>在线工具</h3>
+
             </div>
             <hr>
 
@@ -572,9 +628,9 @@ TypeScript，初次见面，请多指教
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《记录一些有用的网站》
+                    《js技巧合集》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/25/记录一些有用的网站/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/05/07/js-ji-qiao-he-ji/" property="cc:attributionName" rel="cc:attributionURL">
                 Ankle Hao
             </a> 采用
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
@@ -615,10 +671,9 @@ TypeScript，初次见面，请多指教
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/07/25/记录一些有用的网站/">
+                <a href="/2019/07/25/ji-lu-yi-xie-you-yong-de-wang-zhan/">
                     <div class="card-image">
                         
                         
@@ -639,12 +694,19 @@ TypeScript，初次见面，请多指教
 为什么你应该（从现在开始就）写博客
 
 在线工具
+CSS Tricks
+代码生成图片
+在线工具箱
+css技巧
+
+技巧文章
+浏览器js特
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-25
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -653,7 +715,6 @@ TypeScript，初次见面，请多指教
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -664,24 +725,19 @@ TypeScript，初次见面，请多指教
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/05/07/first-one/">
+                <a href="/2019/05/07/hello-world/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="first one">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title">first one</span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            this is my first texthahaha
-one
-two
-three
-
-
+                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
                         
                     </div>
                     <div class="publish-info">
@@ -695,18 +751,6 @@ three
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/tag1/" target="_blank">
-                        <span class="chip bg-color">tag1</span>
-                    </a>
-                    
-                    <a href="/tags/tag2/" target="_blank">
-                        <span class="chip bg-color">tag2</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -819,7 +863,7 @@ three
 <footer class="page-footer bg-color">
     <div class="container row center-align">
         <div class="col s12 m8 l8 copy-right">
-            本站由&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>基于
+            本站由&copy;<a href="https://anklehao.github.io/" target="_blank">AnkleHao</a>基于
             <a href="https://hexo.io/" target="_blank">Hexo</a> 的
             <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
 
@@ -842,7 +886,7 @@ three
                 
             
         </div>
-        <div class="col s12 m4 l4 social-link social-statis">
+        <!-- <div class="col s12 m4 l4 social-link social-statis">
 
 
     <a href="mailto:xxx@xx.xx" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
@@ -856,7 +900,7 @@ three
     </a>
 
 
-</div>
+</div> -->
     </div>
 </footer>
 
@@ -905,5 +949,5 @@ $(function () {
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>
 
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

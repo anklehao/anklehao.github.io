@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>记录一些有用的网站</title>
+      <link href="/2019/07/25/ji-lu-yi-xie-you-yong-de-wang-zhan/"/>
+      <url>/2019/07/25/ji-lu-yi-xie-you-yong-de-wang-zhan/</url>
+      
+        <content type="html"><![CDATA[<h3 id="好文收藏"><a href="#好文收藏" class="headerlink" title="好文收藏"></a>好文收藏</h3><blockquote><p>网上搜集</p></blockquote><ul><li><a href="https://zhuanlan.zhihu.com/p/35080324" target="_blank" rel="noopener">抱歉，学会 Proxy 真的可以为所欲为</a></li><li><a href="https://zhuanlan.zhihu.com/p/57958328" target="_blank" rel="noopener">TypeScript，初次见面，请多指教</a></li><li><a href="http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/" target="_blank" rel="noopener">为什么你应该（从现在开始就）写博客</a></li></ul><h3 id="在线工具"><a href="#在线工具" class="headerlink" title="在线工具"></a>在线工具</h3><ul><li><a href="https://qishaoxuan.github.io/css_tricks/" target="_blank" rel="noopener">CSS Tricks</a></li><li><a href="https://carbon.now.sh" target="_blank" rel="noopener">代码生成图片</a></li><li><a href="http://www.atoolbox.net/" target="_blank" rel="noopener">在线工具箱</a></li><li><a href="https://lhammer.cn/" target="_blank" rel="noopener">css技巧</a></li></ul><h3 id="技巧文章"><a href="#技巧文章" class="headerlink" title="技巧文章"></a>技巧文章</h3><ul><li><a href="https://www.cnblogs.com/pcyy/p/5655542.html" target="_blank" rel="noopener">浏览器js特性</a></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>js技巧合集</title>
+      <link href="/2019/05/07/js-ji-qiao-he-ji/"/>
+      <url>/2019/05/07/js-ji-qiao-he-ji/</url>
+      
+        <content type="html"><![CDATA[<h1 id="JS技巧"><a href="#JS技巧" class="headerlink" title="JS技巧"></a>JS技巧</h1><blockquote><p>总结网上一些大佬收集分享的实用js方法技巧</p></blockquote><h3 id="无loop生成指定长度的数组"><a href="#无loop生成指定长度的数组" class="headerlink" title="无loop生成指定长度的数组"></a>无loop生成指定长度的数组</h3><pre><code>const list = [1, 1, 2, 3, 6, 45, 8, 5, 4, 6, 5]const uniqueList = [...new Set(list)] // [1, 2, 3, 6, 45, 8, 5, 4]</code></pre><h3 id="RGB色值生成16进制色值"><a href="#RGB色值生成16进制色值" class="headerlink" title="RGB色值生成16进制色值"></a>RGB色值生成16进制色值</h3><pre><code>const rgb2Hex = rgb =&gt; {    let rgbList = rgb.toString().match(/\d+/g)    let hex = &#39;#&#39;    for (let i = 0, len = rgbList.length; i &lt; len; ++i) {        hex += (&#39;0&#39; + Number(rgbList[i]).toString(16)).slice(-2)    }    return hex};rgb2Hex(&#39;100, 50, 0&#39;) // &#39;#643200&#39;</code></pre><h3 id="一行代码去重数组"><a href="#一行代码去重数组" class="headerlink" title="一行代码去重数组"></a>一行代码去重数组</h3><pre><code>const list = [1, 1, 2, 3, 6, 45, 8, 5, 4, 6, 5]const uniqueList = [...new Set(list)] // [1, 2, 3, 6, 45, 8, 5, 4]</code></pre><h3 id="判断是否为质数"><a href="#判断是否为质数" class="headerlink" title="判断是否为质数"></a>判断是否为质数</h3><pre><code>const mathIsPrime = n =&gt; {  if (n === 2 || n === 3) {    return true  }  if (isNaN(n) || n &lt;= 1 || n % 1 != 0 || n % 2 == 0 || n % 3 == 0) {    return false;  }  for (let x = 6; x &lt;= Math.sqrt(n) + 1; x += 6) {    if (n % (x - 1) == 0 || n % (x + 1) == 0) {      return false    }  }  return true}mathIsPrime(0) // true</code></pre><h3 id="时间格式化"><a href="#时间格式化" class="headerlink" title="时间格式化"></a>时间格式化</h3><pre><code>const dateFormatter = (formatter, date) =&gt; {    date = (date ? new Date(date) : new Date)    const Y = date.getFullYear() + &#39;&#39;,          M = date.getMonth() + 1,          D = date.getDate(),          H = date.getHours(),          m = date.getMinutes(),          s = date.getSeconds()    return formatter.replace(/YYYY|yyyy/g, Y)                    .replace(/YY|yy/g, Y.substr(2, 2))                    .replace(/MM/g, (M &lt; 10 ? &#39;0&#39; : &#39;&#39;) + M)                    .replace(/DD/g, (D &lt; 10 ? &#39;0&#39; : &#39;&#39;) + D)                    .replace(/HH|hh/g, (H &lt; 10 ? &#39;0&#39; : &#39;&#39;) + H)                    .replace(/mm/g, (m &lt; 10 ? &#39;0&#39; : &#39;&#39;) + m)                    .replace(/ss/g, (s &lt; 10 ? &#39;0&#39; : &#39;&#39;) + s)}dateFormatter(&#39;YYYY-MM-DD HH:mm&#39;, &#39;1995/02/15 13:55&#39;) // 1995-02-15 13:55</code></pre><h3 id="生成随机ID"><a href="#生成随机ID" class="headerlink" title="生成随机ID"></a>生成随机ID</h3><pre><code>const RandomId = len =&gt; Math.random().toString(36).substr(3, len);const id = RandomId(10);// id =&gt; &quot;jg7zpgiqva&quot;</code></pre><h3 id="生成星级评分"><a href="#生成星级评分" class="headerlink" title="生成星级评分"></a>生成星级评分</h3><pre><code>const StartScore = rate =&gt; &quot;★★★★★☆☆☆☆☆&quot;.slice(5 - rate, 10 - rate);const start = StartScore(3);// start =&gt; &quot;★★★&quot;</code></pre><h3 id="网站链接"><a href="#网站链接" class="headerlink" title="网站链接"></a><strong>网站链接</strong></h3><ul><li><a href="https://juejin.im/post/5cc7afdde51d456e671c7e48" target="_blank" rel="noopener">技巧网站</a></li><li><a href="https://juejin.im/post/5d3e96696fb9a07ea420c71c" target="_blank" rel="noopener">提升开发幸福感的10条JS技巧</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> tag1 </tag>
+            
+            <tag> tag2 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2019/05/07/hello-world/"/>
+      <url>/2019/05/07/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
