@@ -4,23 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="记录一些有用的网站, AnkleHao">
-    <meta name="description" content="好文收藏
-网上搜集
+    <meta name="keywords" content="vuecli3-admin, AnkleHao">
+    <meta name="description" content="
+ 整体分析
 
-
-抱歉，学会 Proxy 真的可以为所欲为
-TypeScript，初次见面，请多指教
-为什么你应该（从现在开始就）写博客
-
-在线工具
-CSS Tricks
-代码生成图片
-在线工具箱
-css技巧
-
-技巧文章
-浏览器js特">
+使用vue-cli3 快速创建项目 并自定义文件结构，后台页面布局为经典头部、左侧边栏、右侧主体内容，通过配置路由结构动态渲染左侧菜单（可扩展根据权限动态展示相应的页面）
+创建项目基本目录结构
+├── node_module">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -28,7 +18,7 @@ css技巧
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>记录一些有用的网站 | AnkleHao</title>
+    <title>vuecli3-admin | AnkleHao</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -273,13 +263,13 @@ css技巧
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        记录一些有用的网站
+                        vuecli3-admin
                     </div>
                 </div>
             </div>
@@ -401,7 +391,7 @@ css技巧
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-07-25
+                    2020-05-22
                 </div>
 
                 
@@ -417,23 +407,205 @@ css技巧
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="好文收藏"><a href="#好文收藏" class="headerlink" title="好文收藏"></a>好文收藏</h3><blockquote>
-<p>网上搜集</p>
+                <blockquote>
+<p> 整体分析</p>
 </blockquote>
+<p>使用vue-cli3 快速创建项目 并自定义文件结构，后台页面布局为经典头部、左侧边栏、右侧主体内容，通过配置路由结构动态渲染左侧菜单（可扩展根据权限动态展示相应的页面）</p>
+<h2 id="创建项目基本目录结构"><a href="#创建项目基本目录结构" class="headerlink" title="创建项目基本目录结构"></a>创建项目基本目录结构</h2><pre><code>
+├── node_modules               # 依赖包安装目录
+├── public                     # 静态资源
+│   ├── favicon.ico            # favicon图标
+│   └── index.html             # html模板
+├── src                        # 源代码
+│   ├── assets                 # 图片、字体等静态资源
+│   ├── components             # 全局公用组件
+│   ├── router                 # 路由
+│   ├── store                  # 全局store管理
+│   ├── views                  # 所有业务组件页面
+│   ├── App.vue                # 入口页面
+│   ├── main.js                # 入口文件 加载组件 初始化等
+├── .borwserslistrc            # 浏览器兼容相关
+├── .env.xxx                   # 环境变量配置&amp;emsp;
+├── .eslintrc.js               # eslint 配置项
+├── .gitignore.js              # git忽略文件设置
+├── .babelrc.config.js         # babel-loader 配置
+├── package.json               # package.json
+├── postcss.config.js          # postcss 配置
+├── vue.config.js              # vue-cli 配置
+└── yarn.lock                  # yarn 包
+
+</code></pre><p><img src="/images/1.png" alt="项目预览" title="项目预览"></p>
+<p><div align="center"><img src="/images/目录结构.png" alt="目录结构" title="目录结构"></div></p>
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><p>通过登录接口获得token并存储在localStorage中，设置路由全局守卫判断是否已登录，进入页面，否则跳转至登录页<br>且先不做用户角色鉴权</p>
+<p><strong>请求拦截</strong></p>
+<pre><code>Axios.interceptors.request.use(config =&gt; {
+  // 可添加 token 等
+  if(localStorage.token) {
+    config.headers.Authorization = localStorage.token;
+  }
+  return config;
+}, err =&gt; {
+  return Promise.reject(err);
+})
+</code></pre><p><strong>响应拦截</strong></p>
+<pre><code>Axios.interceptors.response.use(res =&gt; {
+  return res;
+}, err =&gt; {
+  switch (err.response.status) {
+    case 401:
+      // 返回401 清除token信息并跳转到登陆页面
+      localStorage.removeItem(&quot;token&quot;);
+      router.replace(&#39;/login&#39;);
+      break;
+    case 404:
+      console.error(&#39;网络请求不存在&#39;);
+      break;
+    default:
+      console.error(err.response.data)
+  }
+}
+  return Promise.reject(err);
+});
+</code></pre><p><strong>路由全局守卫</strong></p>
+<pre><code>// router/index.js
+
+router.beforeEach((to, from, next) =&gt; {
+  const isLogin = localStorage.token ? true : false;
+  if (!isLogin &amp;&amp; to.path !== &#39;/login&#39;) {
+    // 如果未登录
+    next(&#39;/login&#39;)
+  } else {
+    next()
+  }
+})
+</code></pre><h3 id="整体布局"><a href="#整体布局" class="headerlink" title="整体布局"></a>整体布局</h3><p>在layout 下创建布局承载文件，头部与左侧边栏已组件的形式引入，右侧主体通过变化路由地址展现不同的页面</p>
+<pre><code>&lt;template&gt;
+  &lt;div class=&quot;layout&quot;&gt;
+    &lt;m-header&gt;&lt;/m-header&gt;
+    &lt;m-side-bar&gt;&lt;/m-side-bar&gt;
+    &lt;div class=&quot;page-main&quot;&gt;
+      &lt;transition name=&#39;fade-page&#39;&gt;
+        &lt;router-view&gt;&lt;/router-view&gt;
+      &lt;/transition&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre><h3 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h3><p>根据路由固有格式动态渲染左侧边栏菜单</p>
 <ul>
-<li><a href="https://zhuanlan.zhihu.com/p/35080324" target="_blank" rel="noopener">抱歉，学会 Proxy 真的可以为所欲为</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/57958328" target="_blank" rel="noopener">TypeScript，初次见面，请多指教</a></li>
-<li><a href="http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/" target="_blank" rel="noopener">为什么你应该（从现在开始就）写博客</a></li>
+<li>配置根目录基础路由，包含独立于布局的页面，例如 login、404 等</li>
+<li>创建一个可以适配左侧菜单栏的路由结构</li>
+<li>保存到vuex 中，方便左侧边栏获取渲染，并追加到基础路由中</li>
 </ul>
-<h3 id="在线工具"><a href="#在线工具" class="headerlink" title="在线工具"></a>在线工具</h3><ul>
-<li><a href="https://qishaoxuan.github.io/css_tricks/" target="_blank" rel="noopener">CSS Tricks</a></li>
-<li><a href="https://carbon.now.sh" target="_blank" rel="noopener">代码生成图片</a></li>
-<li><a href="http://www.atoolbox.net/" target="_blank" rel="noopener">在线工具箱</a></li>
-<li><a href="https://lhammer.cn/" target="_blank" rel="noopener">css技巧</a></li>
-</ul>
-<h3 id="技巧文章"><a href="#技巧文章" class="headerlink" title="技巧文章"></a>技巧文章</h3><ul>
-<li><a href="https://www.cnblogs.com/pcyy/p/5655542.html" target="_blank" rel="noopener">浏览器js特性</a></li>
-</ul>
+<pre><code>const routes = [
+  {
+    path: &quot;/&quot;,
+    name: &quot;Home&quot;,
+    component: Layout,
+    redirect: &#39;/dashbord&#39;,
+    children: [
+      {
+        path: &#39;dashbord&#39;,
+        name: &#39;Dashbord&#39;,
+        component: () =&gt; import(&#39;@/views/dashboard&#39;),
+        meta: {
+          title: &#39;首页&#39;,
+          hidden: false,
+        },
+      }
+    ]
+  },
+  {
+    path: &quot;/login&quot;,
+    name: &quot;Login&quot;,
+    component: () =&gt; import(&#39;@/views/Login&#39;),
+  },
+  {
+    path: &quot;*&quot;,
+    name: &quot;404&quot;,
+    redirect: &#39;/404&#39;,
+    component: () =&gt; import(&#39;@/views/404&#39;),
+  },
+];
+
+// 用于渲染左侧边栏的菜单路由
+
+const asyncRoutes = [
+  {
+    path: &#39;/section&#39;,
+    name: &#39;section&#39;,
+    redirect: &#39;/section/section1&#39;,
+    component: () =&gt; import(&#39;@/views/Layout/Layout.vue&#39;),
+    meta: {
+      title: &#39;sections&#39;,
+      hidden: false,
+    },
+    children: [
+      {
+        path: &#39;/section/section1&#39;,
+        name: &#39;section1&#39;,
+        component: () =&gt; import(&#39;@/views/section/section1&#39;),
+        meta: {
+          title: &#39;section1&#39;,
+          hidden: false,
+        }
+      }
+    ]
+  },
+  {
+    path: &#39;/column&#39;,
+    name: &#39;column&#39;,
+    component: () =&gt; import(&#39;@/views/column/column&#39;),
+    meta: {
+      title: &#39;column&#39;,
+      hidden: false,
+    }
+  },
+  {
+    path: &#39;/404&#39;,
+    name: &#39;404&#39;,
+    component: () =&gt; import(&#39;@/views/404.vue&#39;),
+    meta: {
+      title: &#39;404&#39;,
+      hidden: true,
+    }
+  },
+]
+// 存到vuex 
+store.commit(&#39;setMenuList&#39;, asyncRoutes);
+// 追加
+routes[0].children = routes[0].children.concat(asyncRoutes);
+</code></pre><p>这里我直接使用数据追加方式，并没有做鉴权的功能</p>
+<p>在 asyncRoutes 菜单路由这里配置404 页面，基础路由匹配路径 * 的路由重定向到主体当中的404页面 </p>
+<h3 id="左侧边栏"><a href="#左侧边栏" class="headerlink" title="左侧边栏"></a>左侧边栏</h3><p>参考文档用 el-menu 直接循环渲染菜单结构，根据 meta 配置的字段进行菜单详细渲染</p>
+<pre><code>&lt;section v-for=&quot;(item, index) in routerList&quot; :key=&quot;index&quot;&gt;
+  &lt;el-submenu :index=&quot;index + &#39;&#39;&quot; v-if=&quot;item.children &amp;&amp; item.children.length &gt; 0 &amp;&amp; !item.meta.hidden&quot;&gt;
+    &lt;template slot=&quot;title&quot;&gt;
+      &lt;i :class=&quot;item.meta.icon&quot;&gt;&lt;/i&gt;
+      &lt;span&gt;{{item.meta.title}}&lt;/span&gt;
+    &lt;/template&gt;
+    &lt;el-menu-item v-for=&quot;(val, idx) in item.children&quot; :key=&quot;idx&quot; :index=&quot;val.path&quot;&gt;
+      &lt;i :class=&quot;val.meta.icon&quot; v-if=&quot;val.meta.icon&quot;&gt;&lt;/i&gt;
+      &lt;span v-show=&quot;!val.meta.hidden&quot;&gt;{{val.meta.title}}&lt;/span&gt;
+    &lt;/el-menu-item&gt;
+  &lt;/el-submenu&gt;
+  &lt;el-menu-item v-else :index=&quot;item.path&quot; v-show=&quot;!item.meta.hidden&quot;&gt;{{item.meta.title}}&lt;/el-menu-item&gt;
+&lt;/section&gt;
+
+// 获取vuex 中菜单路由
+computed:{
+  routerList(){
+    return this.$store.state.menuList.routerList
+  }
+}
+</code></pre><p>配置可以实现当页面刷新保持当前菜单按钮高亮</p>
+<pre><code>&lt;el-menu 
+  :router=&quot;true&quot;
+  :default-active=&quot;$route.path&quot;
+&gt;
+</code></pre><h3 id="右侧主体"><a href="#右侧主体" class="headerlink" title="右侧主体"></a>右侧主体</h3><p>每一个侧边栏的菜单按钮都对应着一个以路由名称的文件夹，页面中与之相关的子组件建议在当前目录下（便于维护）</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>业内广受好评的框架<br><a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank" rel="noopener">vue-element-admin</a> </p>
+<p>可参考框架<br><a href="https://github.com/gcddblue/vue-admin-webapp" target="_blank" rel="noopener">vue-admin-webapp</a> </p>
+<p>用element ui（不局限于）搭建超级简易的后台管理页面框架，纯经验水文一起交流，大佬轻喷~</p>
 
             </div>
             <hr>
@@ -589,9 +761,9 @@ css技巧
             </div>
             <br>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">
-                    《记录一些有用的网站》
+                    《vuecli3-admin》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/25/ji-lu-yi-xie-you-yong-de-wang-zhan/" property="cc:attributionName" rel="cc:attributionURL">
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/05/22/vue-admin/" property="cc:attributionName" rel="cc:attributionURL">
                 Ankle Hao
             </a> 采用
             <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
@@ -632,7 +804,8 @@ css技巧
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/05/22/vue-admin/">
                     <div class="card-image">
@@ -655,9 +828,9 @@ css技巧
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -666,6 +839,7 @@ css技巧
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -676,28 +850,39 @@ css技巧
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/05/07/js-ji-qiao-he-ji/">
+                <a href="/2019/07/25/ji-lu-yi-xie-you-yong-de-wang-zhan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="js技巧合集">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="记录一些有用的网站">
                         
-                        <span class="card-title">js技巧合集</span>
+                        <span class="card-title">记录一些有用的网站</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            JS技巧
-总结网上一些大佬收集分享的实用js方法技巧
+                            好文收藏
+网上搜集
 
-无loop生成指定长度的数组const list = [1, 1, 2, 3, 6, 45, 8, 5, 4, 6, 5]
-const uniqueList = [...new Set
+
+抱歉，学会 Proxy 真的可以为所欲为
+TypeScript，初次见面，请多指教
+为什么你应该（从现在开始就）写博客
+
+在线工具
+CSS Tricks
+代码生成图片
+在线工具箱
+css技巧
+
+技巧文章
+浏览器js特
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-05-07
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-25
                             </span>
                         <span class="publish-author">
                             
@@ -706,18 +891,6 @@ const uniqueList = [...new Set
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/tag1/" target="_blank">
-                        <span class="chip bg-color">tag1</span>
-                    </a>
-                    
-                    <a href="/tags/tag2/" target="_blank">
-                        <span class="chip bg-color">tag2</span>
-                    </a>
-                    
                 </div>
                 
             </div>
